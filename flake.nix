@@ -3,13 +3,13 @@
 
   # a better recursiveUpdate, taking lists into account
   # much abliged https://stackoverflow.com/questions/54504685/nix-function-to-merge-attributes-records-recursively-and-concatenate-arrays
-  outputs = { self, nixpkgs }:
+  outputs = { self }:
     {
       recursiveMerge = attrList:
-        with nixpkgs.lib;
+        with builtins;
         let
           f = attrPath:
-            lib.zipAttrsWith (key: values:
+            zipAttrsWith (key: values:
               if tail values == [ ]
               then head values
               else if all isList values
